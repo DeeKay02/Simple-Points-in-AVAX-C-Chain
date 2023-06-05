@@ -1,6 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
-const FORK_FUJI = false
+const FORK_FUJI = true
 const FORK_MAINNET = false
 let forkingData = undefined;
 
@@ -24,15 +25,12 @@ module.exports = {
       chainId: !forkingData ? 43112 : undefined, //Only specify a chainId if we are not forking
       forking: forkingData
     },
-    etherscan: {
-      apiKey: process.env.API_KEY,
-    },
     fuji: {
       url: 'https://api.avax-test.network/ext/bc/C/rpc',
       gasPrice: 225000000000,
       chainId: 43113,
       accounts: [
-        // YOUR PRIVATE KEY HERE
+        process.env.PRIVATE_KEY
       ]
     },
     mainnet: {
@@ -40,9 +38,12 @@ module.exports = {
       gasPrice: 225000000000,
       chainId: 43114,
       accounts: [
-        // YOUR PRIVATE KEY HERE
+        process.env.PRIVATE_KEY
       ]
     }
-  }
+  },
+  etherscan: {
+    apiKey: process.env.API_KEY,
+  },
 }
 
